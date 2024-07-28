@@ -1,13 +1,11 @@
-from flask import Flask, render_template, request, send_from_directory
-import json
+from flask import Flask, render_template, request
 import RPi.GPIO as GPIO
-import time
 import mic
 import pwm
 
 
 app = Flask(__name__)
-mic = mic.MIC()
+Mic = mic.MIC()
 Motor = pwm.PWM()
 
 
@@ -19,31 +17,28 @@ def index():
 @app.route("/control", methods=["POST"])
 def control():
     speed = 50
+    left_pressed = request.form['left'] == 'true'
+    right_pressed = request.form['right'] == 'true'
 
-    if direction == "Straight":
+    if left_pressed and right_pressed:
         Motor.straight(speed)
 
-    elif direction == "Back":
-        Motor.back(speed)
-
-    elif direction == "Stop":
-        # ここにモータの命令を追加
-        Motor.stop()
-
-    elif direction == "Turn_Left":
+    elif left_pressed:
         Motor.turn_left(speed)
 
-    elif direction == "Turn_Right":
+    elif right_pressed:
         Motor.turn_right(speed)
+
+    else:
+        Motor.stop()
 
     return "OK"
 
 
 if __name__ == "__main__":
     try:
-        # app.run(debug=True, host = "0.0.0.0", port=8000)
-        app.run(debug=False, host="0.0.0.0", port=8000)
+        app.run(debug=True, host = "0.0.0.0", port=8000)
     except Exception as e:
         print(e)
-        del Servo
+        del Mic
         del Motor

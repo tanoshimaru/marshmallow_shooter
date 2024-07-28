@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ラジコンリモコン</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var isLeftPressed = false;
+            var isRightPressed = false;
+            // ボタンが押されたとき
+            $("button").mousedown(function () {
+                var buttonName = $(this).attr("name");
+                if (buttonName === "left") {
+                    isLeftPressed = true;
+                    sendControlCommand();
+                } else if (buttonName === "right") {
+                    isRightPressed = true;
+                    sendControlCommand();
+                }
+            });
+            // ボタンが離されたとき
+            $("button").mouseup(function () {
+                var buttonName = $(this).attr("name");
+                if (buttonName === "left") {
+                    isLeftPressed = false;
+                } else if (buttonName === "right") {
+                    isRightPressed = false;
+                }
+                sendControlCommand();
+            });
+            // コントロールコマンドを送信する
+            function sendControlCommand() {
+                $.post("/control", { "left": isLeftPressed, "right": isRightPressed });
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <h1>ラジコンリモコン</h1>
+    <form>
+        <button type="button" name="left">左に旋回</button>
+        <button type="button" name="right">右に旋回</button>
+    </form>
+</body>
+
+</html>

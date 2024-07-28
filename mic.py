@@ -1,7 +1,6 @@
 from tuning import Tuning
 import usb.core
 import usb.util
-import time
 
 
 class MIC():
@@ -12,9 +11,18 @@ class MIC():
     def get_doa(self):
         return self.mic_tuning.direction
 
+    def get_vad(self):
+        return self.mic_tuning.is_voice()
+
+    def __del__(self):
+        usb.util.dispose_resources(self.dev)
+
 
 if __name__ == "__main__":
     mic = MIC()
     while True:
-        print(mic.get_doa())
-        time.sleep(1)
+        try:
+            if mic.get_vad():
+                print(mic.get_doa())
+        except KeyboardInterrupt:
+            break

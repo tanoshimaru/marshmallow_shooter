@@ -16,9 +16,9 @@ def main():
             if Mic.get_vad():
                 doa = Mic.get_doa()
                 print(doa)
-                if 10 < doa <= 180:
+                if 0 < doa <= 180:
                     Motor.turn_right(speed)
-                elif 180 < doa < 350:
+                elif 180 < doa < 360:
                     Motor.turn_left(speed)
                 else:
                     Motor.stop()

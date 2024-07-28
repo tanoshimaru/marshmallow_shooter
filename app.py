@@ -1,12 +1,12 @@
 from flask import Flask, render_template, request
 import RPi.GPIO as GPIO
-import mic
-import pwm
+from mic import MIC
+from pwm import PWM
 
 
 app = Flask(__name__)
-Mic = mic.MIC()
-Motor = pwm.PWM()
+Mic = MIC()
+Motor = PWM()
 
 
 @app.route("/")

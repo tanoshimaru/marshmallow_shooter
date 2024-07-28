@@ -1,13 +1,11 @@
-from flask import Flask, render_template, request
 import RPi.GPIO as GPIO
-import mic
-import pwm
+from mic import MIC
+from pwm import PWM
 import time
 
 
-app = Flask(__name__)
-Mic = mic.MIC()
-Motor = pwm.PWM()
+Mic = MIC()
+Motor = PWM()
 
 
 def main():
@@ -15,7 +13,7 @@ def main():
     
     while True:
         try:
-            if mic.get_vad():
+            if Mic.get_vad():
                 dao = Mic.get_dao()
                 print(dao)
                 if 10 < dao <= 180:

@@ -14,16 +14,20 @@ def main():
     speed = 50
     
     while True:
-        dao = Mic.get_dao()
-        if 0 < dao:
-            Motor.turn_left(speed)
-
-        elif Mic.is_right():
-            Motor.turn_right(speed)
-
-        else:
-            Motor.stop()
-        time.sleep(0.1)
+        try:
+            if mic.get_vad():
+                dao = Mic.get_dao()
+                print(dao)
+                if 10 < dao <= 180:
+                    Motor.turn_right(speed)
+                    print("turn right")
+                elif 180 < dao < 350:
+                    Motor.turn_left(speed)
+                    print("turn left")
+                else:
+                    Motor.stop()
+        except KeyboardInterrupt:
+            break
 
 
 if __name__ == "__main__":

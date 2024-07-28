@@ -5,8 +5,11 @@
 2. `python -m venv .venv`
 3. `source .venv/bin/activate`
 4. `pip install pyusb click`
-5. `sudo $(which python) dfu.py --download 6_channels_firmware.bin`
-6. `sudo $(which python) doa.py`
+5. `source .venv/bin/activate && sudo $(which python) dfu.py --download 6_channels_firmware.bin`
+6. `source .venv/bin/activate && sudo $(which python) mic.py`
+
+## Run
+1. `source .venv/bin/activate && sudo $(which python) app.py`
 
 ## Tuning
-1. `python tuning.py -p`
+1. `source .venv/bin/activate && $(which python) tuning.py -p`

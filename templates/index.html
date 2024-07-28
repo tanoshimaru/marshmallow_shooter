@@ -25,32 +25,37 @@
         $(document).ready(function () {
             var isLeftPressed = false;
             var isRightPressed = false;
-            // ボタンが押されたとき
-            $("button").mousedown(function () {
-                event.preventDefault();
-                var buttonName = $(this).attr("name");
-                if (buttonName === "left") {
-                    isLeftPressed = true;
-                    sendControlCommand();
-                } else if (buttonName === "right") {
-                    isRightPressed = true;
-                    sendControlCommand();
-                }
-            });
-            // ボタンが離されたとき
-            $("button").mouseup(function () {
-                var buttonName = $(this).attr("name");
-                if (buttonName === "left") {
-                    isLeftPressed = false;
-                } else if (buttonName === "right") {
-                    isRightPressed = false;
-                }
-                sendControlCommand();
-            });
-            // コントロールコマンドを送信する
+            var intervalId;
+
             function sendControlCommand() {
                 $.post("/control", { "left": isLeftPressed, "right": isRightPressed });
             }
+
+            function startSendingCommand(buttonName) {
+                intervalId = setInterval(() => {
+                    if (buttonName === "left") {
+                        isLeftPressed = true;
+                    } else if (buttonName === "right") {
+                        isRightPressed = true;
+                    }
+                    sendControlCommand();
+                }, 50);
+            }
+
+            function stopSendingCommand() {
+                clearInterval(intervalId);
+                isLeftPressed = false;
+                isRightPressed = false;
+                sendControlCommand();
+            }
+
+            $("button").each(function() {
+                const buttonName = $(this).attr("name");
+                this.addEventListener('pointerdown', () => {
+                    startSendingCommand(buttonName);
+                    document.addEventListener('pointerup', stopSendingCommand, { once: true });
+                });
+            });
         });
     </script>
 </head>

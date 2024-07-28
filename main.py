@@ -18,10 +18,8 @@ def main():
                 print(doa)
                 if 10 < doa <= 180:
                     Motor.turn_right(speed)
-                    print("turn right")
                 elif 180 < doa < 350:
                     Motor.turn_left(speed)
-                    print("turn left")
                 else:
                     Motor.stop()
         except KeyboardInterrupt:

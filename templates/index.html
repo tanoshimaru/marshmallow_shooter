@@ -34,20 +34,27 @@
             function startSendingCommand(buttonName) {
                 if (buttonName === "left") {
                     isLeftPressed = true;
-                    leftIntervalId = setInterval(sendControlCommand, 50);
+                    if (!leftIntervalId) {
+                        leftIntervalId = setInterval(sendControlCommand, 50);
+                    }
                 } else if (buttonName === "right") {
                     isRightPressed = true;
-                    rightIntervalId = setInterval(sendControlCommand, 50);
+                    if (!rightIntervalId) {
+                        rightIntervalId = setInterval(sendControlCommand, 50);
+                    }
                 }
+                sendControlCommand();
             }
 
             function stopSendingCommand(buttonName) {
                 if (buttonName === "left") {
-                    clearInterval(leftIntervalId);
                     isLeftPressed = false;
+                    clearInterval(leftIntervalId);
+                    leftIntervalId = null;
                 } else if (buttonName === "right") {
-                    clearInterval(rightIntervalId);
                     isRightPressed = false;
+                    clearInterval(rightIntervalId);
+                    rightIntervalId = null;
                 }
                 sendControlCommand();
             }
@@ -56,7 +63,9 @@
                 const buttonName = $(this).attr("name");
                 this.addEventListener('pointerdown', () => {
                     startSendingCommand(buttonName);
-                    document.addEventListener('pointerup', () => stopSendingCommand(buttonName), { once: true });
+                });
+                this.addEventListener('pointerup', () => {
+                    stopSendingCommand(buttonName);
                 });
             });
 

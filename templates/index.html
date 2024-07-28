@@ -27,6 +27,7 @@
             var isRightPressed = false;
             // ボタンが押されたとき
             $("button").mousedown(function () {
+                event.preventDefault();
                 var buttonName = $(this).attr("name");
                 if (buttonName === "left") {
                     isLeftPressed = true;

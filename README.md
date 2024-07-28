@@ -9,7 +9,8 @@
 6. `source .venv/bin/activate && sudo $(which python) mic.py`
 
 ## Run
-1. `source .venv/bin/activate && sudo $(which python) app.py`
+Manual: `source .venv/bin/activate && sudo $(which python) app.py`
+Auto: `source .venv/bin/activate && sudo $(which python) main.py`
 
 ## Tuning
 1. `source .venv/bin/activate && $(which python) tuning.py -p`

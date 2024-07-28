@@ -25,27 +25,30 @@
         $(document).ready(function () {
             var isLeftPressed = false;
             var isRightPressed = false;
-            var intervalId;
+            var leftIntervalId, rightIntervalId;
 
             function sendControlCommand() {
                 $.post("/control", { "left": isLeftPressed, "right": isRightPressed });
             }
 
             function startSendingCommand(buttonName) {
-                intervalId = setInterval(() => {
-                    if (buttonName === "left") {
-                        isLeftPressed = true;
-                    } else if (buttonName === "right") {
-                        isRightPressed = true;
-                    }
-                    sendControlCommand();
-                }, 50);
+                if (buttonName === "left") {
+                    isLeftPressed = true;
+                    leftIntervalId = setInterval(sendControlCommand, 50);
+                } else if (buttonName === "right") {
+                    isRightPressed = true;
+                    rightIntervalId = setInterval(sendControlCommand, 50);
+                }
             }
 
-            function stopSendingCommand() {
-                clearInterval(intervalId);
-                isLeftPressed = false;
-                isRightPressed = false;
+            function stopSendingCommand(buttonName) {
+                if (buttonName === "left") {
+                    clearInterval(leftIntervalId);
+                    isLeftPressed = false;
+                } else if (buttonName === "right") {
+                    clearInterval(rightIntervalId);
+                    isRightPressed = false;
+                }
                 sendControlCommand();
             }
 
@@ -53,9 +56,11 @@
                 const buttonName = $(this).attr("name");
                 this.addEventListener('pointerdown', () => {
                     startSendingCommand(buttonName);
-                    document.addEventListener('pointerup', stopSendingCommand, { once: true });
+                    document.addEventListener('pointerup', () => stopSendingCommand(buttonName), { once: true });
                 });
             });
+
+            document.addEventListener('contextmenu', event => event.preventDefault());
         });
     </script>
 </head>
@@ -63,8 +68,8 @@
 <body>
     <h1>ラジコンリモコン</h1>
     <form>
-        <button type="button" name="left" oncontextmenu="return false;">左に旋回</button>
-        <button type="button" name="right" oncontextmenu="return false;">右に旋回</button>
+        <button type="button" name="left">左に旋回</button>
+        <button type="button" name="right">右に旋回</button>
     </form>
 </body>
 

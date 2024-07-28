@@ -14,12 +14,12 @@ def main():
     while True:
         try:
             if Mic.get_vad():
-                dao = Mic.get_dao()
-                print(dao)
-                if 10 < dao <= 180:
+                doa = Mic.get_doa()
+                print(doa)
+                if 10 < doa <= 180:
                     Motor.turn_right(speed)
                     print("turn right")
-                elif 180 < dao < 350:
+                elif 180 < doa < 350:
                     Motor.turn_left(speed)
                     print("turn left")
                 else:

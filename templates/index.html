@@ -7,6 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ラジコンリモコン</title>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <style>
+        button {
+            width: 150px;  /* Set button width */
+            height: 150px; /* Set button height */
+            border-radius: 0; /* Make the button square */
+            font-size: 20px;  /* Increase font size */
+            -webkit-touch-callout: none; /* Prevent callout to copy image, etc when tap to hold */
+            -webkit-user-select: none; /* Prevent webkit selection */
+            -khtml-user-select: none; /* Prevent KHTML selection */
+            -moz-user-select: none; /* Prevent Mozilla selection */
+            -ms-user-select: none; /* Prevent IE selection */
+            user-select: none; /* Prevent selection */
+        }
+    </style>
     <script>
         $(document).ready(function () {
             var isLeftPressed = false;

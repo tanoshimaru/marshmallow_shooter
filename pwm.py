@@ -71,7 +71,5 @@ if __name__ == "__main__":
         sleep(1)
         pwm.back(duty)
         sleep(5)
-        pwm.searchAR(duty)
-        sleep(5)
         pwm.stop()
         sleep(1)

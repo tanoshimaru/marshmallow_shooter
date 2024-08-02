@@ -16,7 +16,7 @@ def index():
 
 @app.route("/control", methods=["POST"])
 def control():
-    speed = 50
+    speed = 80
     left_pressed = request.form['left'] == 'true'
     right_pressed = request.form['right'] == 'true'
 

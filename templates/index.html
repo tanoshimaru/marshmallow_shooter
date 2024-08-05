@@ -7,38 +7,62 @@
     <title>ラジコンリモコン</title>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <style>
+        .control-panel {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .row {
+            display: flex;
+            justify-content: center;
+            margin: 10px;
+        }
         button {
-            width: 150px;  /* Set button width */
-            height: 150px; /* Set button height */
-            border-radius: 0; /* Make the button square */
-            font-size: 20px;  /* Increase font size */
-            -webkit-touch-callout: none; /* Prevent callout to copy image, etc when tap to hold */
-            -webkit-user-select: none; /* Prevent webkit selection */
-            -khtml-user-select: none; /* Prevent KHTML selection */
-            -moz-user-select: none; /* Prevent Mozilla selection */
-            -ms-user-select: none; /* Prevent IE selection */
-            user-select: none; /* Prevent selection */
+            width: 150px;
+            height: 150px;
+            border-radius: 0;
+            font-size: 20px;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        .double {
+            width: 310px;
+            height: 310px;
         }
     </style>
     <script>
         $(document).ready(function () {
+            var isStraightPressed = false;
+            var isBackPressed = false;
             var isLeftPressed = false;
             var isRightPressed = false;
-            var isForwardPressed = false;
-            var isBackwardPressed = false;
-            var leftIntervalId, rightIntervalId, forwardIntervalId, backwardIntervalId;
+            var straightIntervalId, backIntervalId, leftIntervalId, rightIntervalId;
 
             function sendControlCommand() {
                 $.post("/control", { 
+                    "straight": isStraightPressed, 
+                    "back": isBackPressed 
                     "left": isLeftPressed, 
                     "right": isRightPressed, 
-                    "forward": isForwardPressed, 
-                    "backward": isBackwardPressed 
                 });
             }
 
             function startSendingCommand(buttonName) {
-                if (buttonName === "left") {
+                if (buttonName === "straight") {
+                    isStraightPressed = true;
+                    if (!straightIntervalId) {
+                        straightIntervalId = setInterval(sendControlCommand, 50);
+                    }
+                } else if (buttonName === "back") {
+                    isBackPressed = true;
+                    if (!backIntervalId) {
+                        backIntervalId = setInterval(sendControlCommand, 50);
+                    }
+                } else if (buttonName === "left") {
                     isLeftPressed = true;
                     if (!leftIntervalId) {
                         leftIntervalId = setInterval(sendControlCommand, 50);
@@ -48,22 +72,20 @@
                     if (!rightIntervalId) {
                         rightIntervalId = setInterval(sendControlCommand, 50);
                     }
-                } else if (buttonName === "forward") {
-                    isForwardPressed = true;
-                    if (!forwardIntervalId) {
-                        forwardIntervalId = setInterval(sendControlCommand, 50);
-                    }
-                } else if (buttonName === "backward") {
-                    isBackwardPressed = true;
-                    if (!backwardIntervalId) {
-                        backwardIntervalId = setInterval(sendControlCommand, 50);
-                    }
                 }
                 sendControlCommand();
             }
 
             function stopSendingCommand(buttonName) {
-                if (buttonName === "left") {
+                if (buttonName === "straight") {
+                    isStraightPressed = false;
+                    clearInterval(straightIntervalId);
+                    straightIntervalId = null;
+                } else if (buttonName === "back") {
+                    isBackPressed = false;
+                    clearInterval(backIntervalId);
+                    backIntervalId = null;
+                } else if (buttonName === "left") {
                     isLeftPressed = false;
                     clearInterval(leftIntervalId);
                     leftIntervalId = null;
@@ -71,14 +93,6 @@
                     isRightPressed = false;
                     clearInterval(rightIntervalId);
                     rightIntervalId = null;
-                } else if (buttonName === "forward") {
-                    isForwardPressed = false;
-                    clearInterval(forwardIntervalId);
-                    forwardIntervalId = null;
-                } else if (buttonName === "backward") {
-                    isBackwardPressed = false;
-                    clearInterval(backwardIntervalId);
-                    backwardIntervalId = null;
                 }
                 sendControlCommand();
             }
@@ -100,12 +114,18 @@
 
 <body>
     <h1>ラジコンリモコン</h1>
-    <form>
-        <button type="button" name="left">左に旋回</button>
-        <button type="button" name="right">右に旋回</button>
-        <button type="button" name="forward">前進</button>
-        <button type="button" name="backward">後退</button>
-    </form>
+    <div class="control-panel">
+        <div class="row">
+            <button type="button" name="straight" class="double">前進</button>
+        </div>
+        <div class="row">
+            <button type="button" name="left">左に旋回</button>
+            <button type="button" name="right">右に旋回</button>
+        </div>
+        <div class="row">
+            <button type="button" name="back" class="double">後退</button>
+        </div>
+    </div>
 </body>
 
 </html>

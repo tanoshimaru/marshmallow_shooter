@@ -9,7 +9,7 @@ Motor = PWM()
 
 def main():
     speed = 50
-    
+
     while True:
         try:
             if Mic.get_vad():

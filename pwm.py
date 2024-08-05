@@ -62,7 +62,7 @@ class PWM():
 
 
 if __name__ == "__main__":
-    duty = 80
+    duty = 100
     pwm = PWM()
     while True:
         pwm.straight(duty)

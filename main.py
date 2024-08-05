@@ -32,3 +32,4 @@ if __name__ == "__main__":
         print(e)
         del Mic
         del Motor
+        GPIO.cleanup()

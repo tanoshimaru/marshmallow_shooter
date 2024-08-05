@@ -114,7 +114,7 @@
 
 <body>
     <h1>ラジコンリモコン</h1>
-    <div class="control-panel">
+    {% comment %} <div class="control-panel">
         <div class="row">
             <button type="button" name="straight" class="double">前進</button>
         </div>
@@ -125,7 +125,13 @@
         <div class="row">
             <button type="button" name="back" class="double">後退</button>
         </div>
-    </div>
+    </div> {% endcomment %}
+    <form>
+        <button type="button" name="straight">前進</button>
+        <button type="button" name="left">左に旋回</button>
+        <button type="button" name="right">右に旋回</button>
+        <button type="button" name="back">後退</button>
+    </form>
 </body>
 
 </html>

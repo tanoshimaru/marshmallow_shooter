@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="ja">
 
 <head>
@@ -25,10 +24,17 @@
         $(document).ready(function () {
             var isLeftPressed = false;
             var isRightPressed = false;
-            var leftIntervalId, rightIntervalId;
+            var isForwardPressed = false;
+            var isBackwardPressed = false;
+            var leftIntervalId, rightIntervalId, forwardIntervalId, backwardIntervalId;
 
             function sendControlCommand() {
-                $.post("/control", { "left": isLeftPressed, "right": isRightPressed });
+                $.post("/control", { 
+                    "left": isLeftPressed, 
+                    "right": isRightPressed, 
+                    "forward": isForwardPressed, 
+                    "backward": isBackwardPressed 
+                });
             }
 
             function startSendingCommand(buttonName) {
@@ -41,6 +47,16 @@
                     isRightPressed = true;
                     if (!rightIntervalId) {
                         rightIntervalId = setInterval(sendControlCommand, 50);
+                    }
+                } else if (buttonName === "forward") {
+                    isForwardPressed = true;
+                    if (!forwardIntervalId) {
+                        forwardIntervalId = setInterval(sendControlCommand, 50);
+                    }
+                } else if (buttonName === "backward") {
+                    isBackwardPressed = true;
+                    if (!backwardIntervalId) {
+                        backwardIntervalId = setInterval(sendControlCommand, 50);
                     }
                 }
                 sendControlCommand();
@@ -55,6 +71,14 @@
                     isRightPressed = false;
                     clearInterval(rightIntervalId);
                     rightIntervalId = null;
+                } else if (buttonName === "forward") {
+                    isForwardPressed = false;
+                    clearInterval(forwardIntervalId);
+                    forwardIntervalId = null;
+                } else if (buttonName === "backward") {
+                    isBackwardPressed = false;
+                    clearInterval(backwardIntervalId);
+                    backwardIntervalId = null;
                 }
                 sendControlCommand();
             }
@@ -79,6 +103,8 @@
     <form>
         <button type="button" name="left">左に旋回</button>
         <button type="button" name="right">右に旋回</button>
+        <button type="button" name="forward">前進</button>
+        <button type="button" name="backward">後退</button>
     </form>
 </body>
 

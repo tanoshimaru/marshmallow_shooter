@@ -17,10 +17,21 @@ def index():
 @app.route("/control", methods=["POST"])
 def control():
     speed = 80
-    left_pressed = request.form['left'] == 'true'
-    right_pressed = request.form['right'] == 'true'
+    left_pressed = request.form["left"] == "true"
+    right_pressed = request.form["right"] == "true"
+    forward_pressed = request.form["forward"] == "true"
+    backward_pressed = request.form["backward"] == "true"
 
-    if left_pressed and right_pressed:
+    if forward_pressed and backward_pressed:
+        Motor.stop()
+
+    elif forward_pressed:
+        Motor.forward(speed)
+
+    elif backward_pressed:
+        Motor.backward(speed)
+
+    elif left_pressed and right_pressed:
         Motor.straight(speed)
 
     elif left_pressed:
@@ -37,7 +48,7 @@ def control():
 
 if __name__ == "__main__":
     try:
-        app.run(debug=True, host = "0.0.0.0", port=8000)
+        app.run(debug=True, host="0.0.0.0", port=8000)
     except Exception as e:
         print(e)
         del Mic

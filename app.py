@@ -16,23 +16,22 @@ def index():
 
 @app.route("/control", methods=["POST"])
 def control():
-    speed = 80
     straight_pressed = request.form["straight"] == "true"
     back_pressed = request.form["back"] == "true"
     left_pressed = request.form["left"] == "true"
     right_pressed = request.form["right"] == "true"
 
     if straight_pressed:
-        Motor.straight(speed)
+        Motor.straight(100)
 
     elif back_pressed:
-        Motor.back(speed)
+        Motor.back(100)
 
     elif left_pressed:
-        Motor.turn_left(speed)
+        Motor.turn_left(80)
 
     elif right_pressed:
-        Motor.turn_right(speed)
+        Motor.turn_right(80)
 
     else:
         Motor.stop()

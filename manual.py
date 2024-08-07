@@ -26,7 +26,7 @@ if __name__ == "__main__":
         Motor = PWM()
         listen_keyboard(on_press=press)
     except KeyboardInterrupt:
-        print("プログラムを終了します。")
+        print("プログラムを終了します")
     except Exception as e:
         print(e)
     finally:

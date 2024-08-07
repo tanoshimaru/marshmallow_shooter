@@ -11,9 +11,9 @@ def main():
             doa = Mic.get_doa()
             print(doa)
             if -180 <= doa <= -10:
-                Motor.turn_left(80)
-            elif 10 <= doa <= 180:
                 Motor.turn_right(80)
+            elif 10 <= doa <= 180:
+                Motor.turn_left(80)
             if 10 <= abs(doa) <= 50:
                 time.sleep(0.1)
             elif 50 < abs(doa) <= 90:

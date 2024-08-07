@@ -1,24 +1,17 @@
 import asyncio
 import RPi.GPIO as GPIO
-import time
 from sshkeyboard import listen_keyboard
 
-from mic import MIC
 from pwm import PWM
 
 
-Mic = MIC()
-Motor = PWM()
-
-
 async def press(key):
-    print(f"'{key}' pressed")
     if key == "w":
         Motor.straight(100)
         await asyncio.sleep(0.5)
     elif key == "s":
         Motor.back(100)
-        await asyncio.sleep(0.5)
+        await asyncio.sleep(0.3)
     elif key == "a":
         Motor.turn_left(80)
         await asyncio.sleep(0.1)
@@ -30,12 +23,12 @@ async def press(key):
 
 if __name__ == "__main__":
     try:
-        cmd = listen_keyboard(on_press=press)
+        Motor = PWM()
+        listen_keyboard(on_press=press)
     except KeyboardInterrupt:
         print("プログラムを終了します。")
     except Exception as e:
         print(e)
     finally:
-        del Mic
         del Motor
         GPIO.cleanup()

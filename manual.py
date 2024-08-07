@@ -13,49 +13,26 @@ Motor = PWM()
 def press(key):
     print(f"'{key}' pressed")
     if key == "w":
-        cmd = "straight"
+        Motor.straight(100)
     elif key == "s":
-        cmd = "back"
+        Motor.back(100)
     elif key == "a":
-        cmd = "left"
+        Motor.turn_left(80)
     elif key == "d":
-        cmd = "right"
-    return cmd
+        Motor.turn_right(80)
 
 
 def release(key):
     print(f"'{key}' released")
-    cmd = "stop"
-    return cmd
-
-
-listen_keyboard(
-    on_press=press,
-    on_release=release,
-)
-
-def control():
-    cmd = listen_keyboard(
-        on_press=press,
-        on_release=release,
-    )
-    if cmd:
-        Motor.straight(100)
-    elif cmd:
-        Motor.back(100)
-    elif cmd:
-        Motor.turn_left(80)
-    elif cmd:
-        Motor.turn_right(80)
-    else:
-        Motor.stop()
-    time.sleep(0.1)
+    Motor.stop()
 
 
 if __name__ == "__main__":
     try:
-        while True:
-            control()
+        cmd = listen_keyboard(
+            on_press=press,
+            on_release=release,
+        )
     except KeyboardInterrupt:
         print("プログラムを終了します。")
     except Exception as e:

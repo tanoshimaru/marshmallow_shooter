@@ -1,6 +1,7 @@
 import RPi.GPIO as GPIO
-import keyboard
 import time
+from sshkeyboard import listen_keyboard
+
 from mic import MIC
 from pwm import PWM
 
@@ -8,18 +9,50 @@ from pwm import PWM
 Mic = MIC()
 Motor = PWM()
 
+straight_pressed = False
+back_pressed = False
+left_pressed = False
+right_pressed = False
+
+def press(key):
+    print(f"'{key}' pressed")
+    if key == "w":
+        straight_pressed = True
+    elif key == "s":
+        back_pressed = True
+    elif key == "a":
+        left_pressed = True
+    elif key == "d":
+        right_pressed = True
+
+
+def release(key):
+    print(f"'{key}' released")
+    if key == "w":
+        straight_pressed = False
+    elif key == "s":
+        back_pressed = False
+    elif key == "a":
+        left_pressed = False
+    elif key == "d":
+        right_pressed = False
+
+
+listen_keyboard(
+    on_press=press,
+    on_release=release,
+)
 
 def control():
-    if keyboard.is_pressed("w"):
-        print("Pressed W and Straight")
+    if straight_pressed:
         Motor.straight(100)
-    elif keyboard.is_pressed("s"):
+    elif back_pressed:
         print("Pressed S and Back")
         Motor.back(100)
-    elif keyboard.is_pressed("a"):
+    elif left_pressed:
         print("Pressed A and Left")
         Motor.turn_left(80)
-    elif keyboard.is_pressed("d"):
+    elif right_pressed:
         print("Pressed D and Right")
         Motor.turn_right(80)
     else:

@@ -1,15 +1,11 @@
+import asyncio
 import RPi.GPIO as GPIO
 from mic import MIC
 from pwm import PWM
 
 
-Mic = MIC()
-Motor = PWM()
-
-
 def main():
     speed = 50
-
     while True:
         try:
             if Mic.get_vad():
@@ -26,10 +22,13 @@ def main():
 
 
 if __name__ == "__main__":
+    Motor = PWM()
+    Mic = MIC()
     try:
         main()
     except Exception as e:
         print(e)
-        del Mic
+    finally:
         del Motor
+        del Mic
         GPIO.cleanup()

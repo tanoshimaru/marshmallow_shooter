@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 import keyboard
+import time
 from mic import MIC
 from pwm import PWM
 
@@ -19,22 +20,12 @@ def control():
         Motor.turn_right(80)
     else:
         Motor.stop()
-    return "OK"
+    time.sleep(0.1)
 
 
 if __name__ == "__main__":
     try:
-        while True:
-            if keyboard.is_pressed("w"):
-                Motor.straight(100)
-            elif keyboard.is_pressed("s"):
-                Motor.back(100)
-            elif keyboard.is_pressed("a"):
-                Motor.turn_left(80)
-            elif keyboard.is_pressed("d"):
-                Motor.turn_right(80)
-            else:
-                Motor.stop()
+        control()
     except KeyboardInterrupt:
         print("プログラムを終了します。")
     except Exception as e:

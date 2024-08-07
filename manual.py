@@ -20,10 +20,11 @@ def press(key):
         time.sleep(0.5)
     elif key == "a":
         Motor.turn_left(80)
-        time.sleep(0.5)
+        time.sleep(0.1)
     elif key == "d":
         Motor.turn_right(80)
         time.sleep(0.1)
+    Motor.stop()
 
 
 if __name__ == "__main__":

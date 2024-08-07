@@ -3,7 +3,7 @@ import time
 
 from mic import MIC
 from pwm import PWM
-from servo import Servo
+from servo import SERVO
 
 
 def main():
@@ -29,13 +29,13 @@ def main():
         Motor.stop()
         time.sleep(0.3)
     print("Marshmallow-Shoot!")
-    
+    Servo.servo_ctrl(0)
 
 
 if __name__ == "__main__":
     Motor = PWM()
     Mic = MIC()
-    Servo = Servo()
+    Servo = SERVO()
     try:
         main()
     except Exception as e:

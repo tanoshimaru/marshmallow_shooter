@@ -2,7 +2,7 @@ import RPi.GPIO as GPIO
 from time import sleep
 
 
-class Servo:
+class SERVO:
     def __init__(self):
         servo_pin = 18
         GPIO.setmode(GPIO.BCM)
@@ -23,7 +23,7 @@ class Servo:
 
 
 if __name__ == "__main__":
-    servo = Servo()
+    servo = SERVO()
     servo.servo_ctrl(-3)
     sleep(0.3)
     servo.servo_ctrl(3)

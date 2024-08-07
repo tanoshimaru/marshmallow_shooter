@@ -13,4 +13,4 @@ Manual: `source .venv/bin/activate && sudo $(which python) manual.py`
 Auto: `source .venv/bin/activate && sudo $(which python) main.py`
 
 ## Tuning
-1. `source .venv/bin/activate && $(which python) tuning.py -p`
+1. `source .venv/bin/activate && sudo $(which python) tuning.py -p`

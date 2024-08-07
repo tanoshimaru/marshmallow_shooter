@@ -14,14 +14,16 @@ def press(key):
     print(f"'{key}' pressed")
     if key == "w":
         Motor.straight(100)
+        time.sleep(0.5)
     elif key == "s":
         Motor.back(100)
+        time.sleep(0.5)
     elif key == "a":
         Motor.turn_left(80)
+        time.sleep(0.5)
     elif key == "d":
         Motor.turn_right(80)
-    time.sleep(0.1)
-    Motor.stop()
+        time.sleep(0.1)
 
 
 if __name__ == "__main__":

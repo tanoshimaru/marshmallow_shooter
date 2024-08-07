@@ -5,6 +5,9 @@ from sshkeyboard import listen_keyboard
 from pwm import PWM
 
 
+Motor = PWM()
+
+
 async def press(key):
     if key == "w":
         Motor.straight(100)
@@ -22,7 +25,6 @@ async def press(key):
 
 
 if __name__ == "__main__":
-    Motor = PWM()
     try:
         listen_keyboard(on_press=press)
     except KeyboardInterrupt:

@@ -20,10 +20,7 @@ def press(key):
         Motor.turn_left(80)
     elif key == "d":
         Motor.turn_right(80)
-
-
-def release(key):
-    print(f"'{key}' released")
+    time.sleep(0.1)
     Motor.stop()
 
 
@@ -31,7 +28,6 @@ if __name__ == "__main__":
     try:
         cmd = listen_keyboard(
             on_press=press,
-            on_release=release,
         )
     except KeyboardInterrupt:
         print("プログラムを終了します。")

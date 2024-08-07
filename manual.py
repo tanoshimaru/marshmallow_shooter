@@ -11,12 +11,16 @@ Motor = PWM()
 
 def control():
     if keyboard.is_pressed("w"):
+        print("Pressed W and Straight")
         Motor.straight(100)
     elif keyboard.is_pressed("s"):
+        print("Pressed S and Back")
         Motor.back(100)
     elif keyboard.is_pressed("a"):
+        print("Pressed A and Left")
         Motor.turn_left(80)
     elif keyboard.is_pressed("d"):
+        print("Pressed D and Right")
         Motor.turn_right(80)
     else:
         Motor.stop()

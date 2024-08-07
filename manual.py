@@ -22,8 +22,8 @@ async def press(key):
 
 
 if __name__ == "__main__":
+    Motor = PWM()
     try:
-        Motor = PWM()
         listen_keyboard(on_press=press)
     except KeyboardInterrupt:
         print("プログラムを終了します")

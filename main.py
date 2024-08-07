@@ -1,5 +1,6 @@
-import asyncio
 import RPi.GPIO as GPIO
+import time
+
 from mic import MIC
 from pwm import PWM
 
@@ -16,6 +17,8 @@ def main():
                 Motor.turn_left(speed)
             else:
                 Motor.stop()
+            time.sleep(0.1)
+        time.sleep(0.3)
 
 
 if __name__ == "__main__":

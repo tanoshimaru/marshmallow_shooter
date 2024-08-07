@@ -8,7 +8,7 @@ from pwm import PWM
 def main():
     while True:
         if Mic.get_vad():
-            doa = Mic.get_doa() - 180
+            doa = Mic.get_doa()
             print(doa)
             if -180 <= doa <= -10:
                 Motor.turn_left(80)

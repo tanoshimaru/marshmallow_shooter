@@ -9,7 +9,7 @@ class MIC():
         self.mic_tuning = Tuning(self.dev)
 
     def get_doa(self):
-        return self.mic_tuning.direction
+        return self.mic_tuning.direction - 180
 
     def get_vad(self):
         return self.mic_tuning.is_voice()

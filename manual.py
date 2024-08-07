@@ -25,7 +25,8 @@ def control():
 
 if __name__ == "__main__":
     try:
-        control()
+        while True:
+            control()
     except KeyboardInterrupt:
         print("プログラムを終了します。")
     except Exception as e:

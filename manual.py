@@ -9,33 +9,24 @@ from pwm import PWM
 Mic = MIC()
 Motor = PWM()
 
-straight_pressed = False
-back_pressed = False
-left_pressed = False
-right_pressed = False
 
 def press(key):
     print(f"'{key}' pressed")
     if key == "w":
-        straight_pressed = True
+        cmd = "straight"
     elif key == "s":
-        back_pressed = True
+        cmd = "back"
     elif key == "a":
-        left_pressed = True
+        cmd = "left"
     elif key == "d":
-        right_pressed = True
+        cmd = "right"
+    return cmd
 
 
 def release(key):
     print(f"'{key}' released")
-    if key == "w":
-        straight_pressed = False
-    elif key == "s":
-        back_pressed = False
-    elif key == "a":
-        left_pressed = False
-    elif key == "d":
-        right_pressed = False
+    cmd = "stop"
+    return cmd
 
 
 listen_keyboard(
@@ -44,16 +35,17 @@ listen_keyboard(
 )
 
 def control():
-    if straight_pressed:
+    cmd = listen_keyboard(
+        on_press=press,
+        on_release=release,
+    )
+    if cmd:
         Motor.straight(100)
-    elif back_pressed:
-        print("Pressed S and Back")
+    elif cmd:
         Motor.back(100)
-    elif left_pressed:
-        print("Pressed A and Left")
+    elif cmd:
         Motor.turn_left(80)
-    elif right_pressed:
-        print("Pressed D and Right")
+    elif cmd:
         Motor.turn_right(80)
     else:
         Motor.stop()

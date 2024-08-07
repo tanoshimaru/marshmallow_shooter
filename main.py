@@ -6,14 +6,14 @@ from pwm import PWM
 
 
 def main():
-    speed = 50
+    speed = 80
     while True:
         if Mic.get_vad():
             doa = Mic.get_doa()
             print(doa)
-            if 5 <= doa <= 180:
+            if 10 <= doa <= 180:
                 Motor.turn_right(speed)
-            elif 180 < doa <= 355:
+            elif 180 < doa <= 350:
                 Motor.turn_left(speed)
             else:
                 Motor.stop()

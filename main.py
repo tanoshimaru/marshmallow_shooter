@@ -18,6 +18,7 @@ def main():
             else:
                 Motor.stop()
             time.sleep(0.1)
+        Motor.stop()
         time.sleep(0.3)
 
 

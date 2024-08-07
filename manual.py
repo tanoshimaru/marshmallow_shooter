@@ -25,7 +25,16 @@ def control():
 if __name__ == "__main__":
     try:
         while True:
-            control()
+            if keyboard.is_pressed("w"):
+                Motor.straight(100)
+            elif keyboard.is_pressed("s"):
+                Motor.back(100)
+            elif keyboard.is_pressed("a"):
+                Motor.turn_left(80)
+            elif keyboard.is_pressed("d"):
+                Motor.turn_right(80)
+            else:
+                Motor.stop()
     except KeyboardInterrupt:
         print("プログラムを終了します。")
     except Exception as e:

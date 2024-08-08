@@ -8,15 +8,14 @@ from servo import SERVO
 
 
 def press(key):
-    print(key)
     if key == "space":
         print("Marshmallow-Shoot!")
         Servo.servo_ctrl(0)
 
 
 def main():
-    listen_keyboard(on_press=press)
     while True:
+        listen_keyboard(on_press=press)
         if Mic.get_vad():
             doa = Mic.get_doa()
             print(doa)

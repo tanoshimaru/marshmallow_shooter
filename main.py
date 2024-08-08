@@ -1,21 +1,12 @@
 import RPi.GPIO as GPIO
 import time
-from sshkeyboard import listen_keyboard
 
 from mic import MIC
 from pwm import PWM
-from servo import SERVO
-
-
-def press(key):
-    if key == "space":
-        print("Marshmallow-Shoot!")
-        Servo.servo_ctrl(0)
 
 
 def main():
     while True:
-        listen_keyboard(on_press=press)
         if Mic.get_vad():
             doa = Mic.get_doa()
             print(doa)
@@ -36,7 +27,6 @@ def main():
 if __name__ == "__main__":
     Motor = PWM()
     Mic = MIC()
-    Servo = SERVO()
     try:
         main()
     except Exception as e:
@@ -44,5 +34,4 @@ if __name__ == "__main__":
     finally:
         del Motor
         del Mic
-        del Servo
         GPIO.cleanup()

@@ -8,7 +8,6 @@ def press(key):
     if key == "space":
         print("Marshmallow-Shoot!")
         Servo.servo_ctrl(0)
-        exit()
 
 
 if __name__ == "__main__":

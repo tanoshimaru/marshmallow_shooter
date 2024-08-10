@@ -41,7 +41,7 @@ class PWM():
         self.p2.ChangeDutyCycle(0)
         self.p3.ChangeDutyCycle(0)
         self.p4.ChangeDutyCycle(0)
-        print("Stop")
+        # print("Stop")
 
     def turn_left(self, duty):
         self.p1.ChangeDutyCycle(duty)

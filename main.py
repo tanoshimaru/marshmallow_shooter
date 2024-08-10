@@ -23,8 +23,8 @@ def motor_control():
                 time.sleep(0.2)
             elif 90 < abs(doa) <= 180:
                 time.sleep(0.3)
-        Motor.stop()
-        time.sleep(0.5)
+            Motor.stop()
+            time.sleep(0.5)
 
 
 def press(key):

@@ -14,6 +14,7 @@ url = "http://raspberrypi:3000/lightup"
 def motor_control():
     while True:
         if Mic.get_vad():
+            time.sleep(0.5)
             doa = Mic.get_doa()
             print(doa)
             if -180 <= doa <= -5:

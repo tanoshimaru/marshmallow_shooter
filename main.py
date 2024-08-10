@@ -1,12 +1,15 @@
 import RPi.GPIO as GPIO
 import time
 import threading
+import requests
 from sshkeyboard import listen_keyboard
 
 from mic import MIC
 from pwm import PWM
 from servo import SERVO
 
+
+url = "http://raspberrypi:3000/lightup"
 
 def motor_control():
     while True:
@@ -31,6 +34,12 @@ def press(key):
     if key == "space":
         print("Marshmallow-Shoot!")
         Servo.servo_ctrl(0)
+        try:
+            response = requests.get(url)
+            response.raise_for_status()
+            print('Response:', response.text)
+        except requests.exceptions.RequestException as e:
+            print('Error:', e)
 
 
 if __name__ == "__main__":

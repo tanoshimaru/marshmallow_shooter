@@ -16,7 +16,7 @@ async def press(key):
         await asyncio.sleep(0.3)
     elif key == "a":
         Motor.turn_left(80)
-        await asyncio.sleep(0.1)
+        await asyncio.sleep(0.3)
     elif key == "d":
         Motor.turn_right(80)
         await asyncio.sleep(0.1)

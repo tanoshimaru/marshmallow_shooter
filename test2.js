@@ -29,12 +29,14 @@ async function main() {
     const server = http.createServer((req, res) => {
         if (req.method === 'GET' && req.url === '/lightup') {
             // ライトアップ処理を非同期で実行
-            rainbowBlink(npix, 500, 10).catch(error => {
+            diagonalRainbowCycle(npix, 20).then(() => {
+                turnOffLights(npix);
+            }).catch(error => {
                 console.error(error);
             });
 
             res.writeHead(200, { 'Content-Type': 'text/plain' });
-            res.end('LEDs are lighting up and blinking!\n');
+            res.end('LEDs are lighting up!\n');
         } else {
             res.writeHead(404, { 'Content-Type': 'text/plain' });
             res.end('Not Found\n');
@@ -45,16 +47,6 @@ async function main() {
     server.listen(3000, () => {
         console.log('Server is listening on port 3000');
     });
-}
-
-// Rainbow blink function
-async function rainbowBlink(npix, interval, count) {
-    for (let i = 0; i < count; i++) {
-        await diagonalRainbowCycle(npix, 20); // Rainbow effect
-        await sleep(interval); // Wait for the specified interval
-        await turnOffLights(npix); // Turn off lights
-        await sleep(interval); // Wait before turning them on again
-    }
 }
 
 // Diagonal rainbow cycle across the LEDs with reduced brightness

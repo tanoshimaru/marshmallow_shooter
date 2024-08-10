@@ -1,3 +1,4 @@
+import time
 from tuning import Tuning
 import usb.core
 import usb.util
@@ -15,6 +16,7 @@ class MIC():
         return doa
 
     def get_vad(self):
+        time.sleep(0.3)
         return self.mic_tuning.is_voice()
 
     def __del__(self):

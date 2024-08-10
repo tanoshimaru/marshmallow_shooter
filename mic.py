@@ -10,14 +10,12 @@ class MIC():
         self.mic_tuning = Tuning(self.dev)
 
     def get_doa(self):
-        time.sleep(0.3)
         doa = self.mic_tuning.direction
         if 180 <= doa < 360:
             doa = doa - 360
         return doa
 
     def get_vad(self):
-        time.sleep(0.3)
         return self.mic_tuning.is_voice()
 
     def __del__(self):

@@ -1,4 +1,5 @@
 import asyncio
+import requests
 import RPi.GPIO as GPIO
 from sshkeyboard import listen_keyboard
 
@@ -6,6 +7,8 @@ from mic import MIC
 from pwm import PWM
 from servo import SERVO
 
+
+url = "http://raspberrypi:3000/lightup"
 
 async def press(key):
     if key == "w":
@@ -23,6 +26,12 @@ async def press(key):
     elif key == "space":
         print("Marshmallow-Shoot!")
         Servo.servo_ctrl(0)
+        try:
+            response = requests.get(url)
+            response.raise_for_status()
+            print("Response:", response.text)
+        except requests.exceptions.RequestException as e:
+            print("Error:", e)
     Motor.stop()
 
 
